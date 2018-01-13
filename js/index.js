@@ -2,6 +2,7 @@
 
 var BASIC_URL = "http://localhost:5000/washing/";
 var BASIC_URL2 = "http://localhost:5000/washing/discount";
+var MAIL_URL = "http://localhost:5000/washing/mail";
 //to extract the default values of demand until this hour
 var URL_Todays_Data =  "http://localhost:5000/washing/current";
 var chart;
@@ -159,21 +160,22 @@ $(function() {
 getInitialData();
 
 $('#submitformBtn2').click( function (){
-	console.log($('#form1').serialize())
    $.ajax({
        url: BASIC_URL2,
        data: $('#form1').serialize(),
        method: "GET",
        success: function(result){
 
-       	console.log("HERE")
        	var product = result[0]
        	var gender = result[1]
        	var extra_discount = result[2]
 
-       	console.log(product)
-       	console.log(extra_discount)
-       	$('#product'+product).toggleClass("greyed")
+       	$('#product1').addClass("greyed")
+       	$('#product2').addClass("greyed")
+       	$('#product3').addClass("greyed")
+       	$('#product4').addClass("greyed")
+
+       	$('#product'+product).removeClass("greyed")
        	$('#extra_discount').text("You get extra discount: " + result[2] + "%")
 
        }, 
@@ -192,15 +194,18 @@ $('#submitformBtn1').click( function (){
        data: $('#form2').serialize(),
        method: "GET",
        success: function(result){
-
-           //console.log("result obtained is" + result);
 		   
 		   //get time sent
 		   var hour = $('#hourofday').val();
 		   var newPoint = {x : hour, y : Math.round(result[0])};
-		   
-		   //console.log(newPoint.x);
-		   //console.log(newPoint.y);
+
+		   $('#demand_number').text("Demand at that point: " + newPoint.y)
+
+		   if(newPoint.y < 5) {
+		   		$('#email').removeClass("hidden")
+		   } else {
+		   		$('#email').addClass("hidden")
+		   }
 		   
 		   //push data to chart
 		   updateDataByNewEntry(newPoint);
@@ -218,6 +223,26 @@ $('#submitformBtn1').click( function (){
 
 });
 
+
+$('#sendEmail').click( function (){
+   $.ajax({
+       url: MAIL_URL,
+       data: {"recipient": $('#recipient').val()},
+       method: "GET",
+       success: function(result){
+		   
+       		alert("Mail send");
+       		$('#email').addClass("hidden")
+
+       }, 
+       error: function(xhr, textStatus, errorThrown){
+       	// TODO
+           //alert("Unable to fetch Server data"+ textStatus); 
+		   //alert("xhr"+ xhr);             	 	
+       }
+   });
+
+});
 
 function updateDataByNewEntry(newValue){
 
