@@ -1,7 +1,7 @@
 
 
 var BASIC_URL = "http://localhost:5000/washing/";
-// var BASIC_URL = "http://localhost:5000/washing/?artikel_id=1&activity_merged=1&hourofday=12&month=11&dayofweek=4";
+var BASIC_URL2 = "http://localhost:5000/washing/discount";
 //to extract the default values of demand until this hour
 var URL_Todays_Data =  "http://localhost:5000/washing/current";
 var chart;
@@ -159,27 +159,28 @@ $(function() {
 getInitialData();
 
 $('#submitformBtn2').click( function (){
+	console.log($('#form1').serialize())
    $.ajax({
-       url: BASIC_URL,
+       url: BASIC_URL2,
        data: $('#form1').serialize(),
        method: "GET",
        success: function(result){
-           //console.log("result obtained is" + result);
-		   //get time sent
-		   var hour = $('#hourofday').val();
-		   var newPoint = {x : hour, y : Math.round(result)};
-		   console.log(result);
-		   console.log(newPoint.y);
-		   //console.log(newPoint.x);
-		   //console.log(newPoint.y);
-		   //push data to chart
-		   updateDataByNewEntry(newPoint);
-		   //update graph by re-rendring it
-		   chart.render();
+
+       	console.log("HERE")
+       	var product = result[0]
+       	var gender = result[1]
+       	var extra_discount = result[2]
+
+       	console.log(product)
+       	console.log(extra_discount)
+       	$('#product'+product).toggleClass("greyed")
+       	$('#extra_discount').text("You get extra discount: " + result[2] + "%")
+
        }, 
        error: function(xhr, textStatus, errorThrown){ 
            //alert("Unable to fetch Server data"+ textStatus); 
-		   //alert("xhr"+ xhr);             	 	
+		   //alert("xhr"+ xhr);
+		   console.log(xhr)
        }
    });
 
