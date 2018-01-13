@@ -1,142 +1,171 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Charts</title>
+  <title>Charts</title>
 
-	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-	<script src="js/canvasjs.min.js"></script>
-    <script src="js/index.js"></script>
-	<link href="styles/style.css" rel="stylesheet">	
-	 <!-- INCLUDE Bootstrap -->
-        
-    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	
+  <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/canvasjs.min.js"></script>
+  <script src="js/index.js"></script>
+  <link href="styles/style.css" rel="stylesheet">
+  <!-- INCLUDE Bootstrap -->
+
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            <a class="navbar-brand" href="#">Dashboard</a>
-            
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Dashboard</a>
+
+      </div>
+    </div>
+  </nav>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div id="chartContainer" style=" height:500px"></div>
             </div>
+          </div>
         </div>
-    </nav>
-    <div class="row">
-      <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div id="chartContainer" style=" height:500px"></div>
-<!--				<div id="legend"><table>
-				<tr><td style="width:20vw"><div class="legend low"></div><p>something here.</p></td>
-                <td style="width:25vw"><div class="legend medium"></div><p>something here</p></td>
-                <td style="width:20vw"><div class="legend high"></div><p>something here</p></td></tr></table>
-				</div> -->
-            </div>
+
+        <div class="col-md-3" id="sidepanel">
+          <div class="panel panel-default">
+            <div class="panel-body" id="sidebar">
+              <p style="font-family: sans-serif;">Please fill in the required options:</p>
+              <form id='form1'>
+                <div>
+                  <label for="month">Month of the Year</label>
+                  <input name='month' id='month' type="number" />
+                </div>
+                <div>
+                  <label for="dayofweek">Day of the Week</label>
+                  <input name='dayofweek' id='dayofweek' type="number" />
+                </div>
+                <div>
+                  <label for="hourofday">Hour of the Day</label>
+                  <input name='hourofday' id='hourofday' type="number" />
+                </div>
+                <div>
+                  <label for="activity_merged">Fuel Station</label>
+                  <input name='activity_merged' id='activity_merged' type="number" />
+                </div>
+                <div>
+                  <label for="artikel_id">Price Level</label>
+                  <input name='artikel_id' id='artikel_id' type="number" />
+                </div>
+                <div>
+                  <label for="Weather">Weather</label>
+                  <input name='Weather' id='Weather' type="number" />
+                </div>
+                 <div>
+                  <label for="Traffic">Traffic</label>
+                  <input name='Traffic' id='Traffic' type="number" />
+                </div>
+              </div>
+              <button type="button" id="submitformBtn">Submit</button>
+            </form>
+          </div>
         </div>
       </div>
-    
-    <div class="col-md-3" id="sidepanel">
-        <div class="panel panel-default">
-            <div class="panel-body" id="sidebar">
-			<p style="font-family: sans-serif;">Please fill in the required options:</p>
-	<form id='form1'>
-<!--	<br>
-    <label for="DI">Label here</label>    
-	<select id ='DI'  style = 'height:25px; width:100px'>
-        <option value='='>Select</option>
-        <option value='>'>greater than</option>
-        <option value='<'>less than</option>
-	</select> 
-    <input name="weather" value="" class="hidden"/>
-    <input name="timestamp" value="" class="hidden"/> -->
-    <div>
-    <label for="month">Month</label>
-    <input name='month' id='month' type="number"/>
     </div>
-    <div>
-    <label for="dayofweek">Weekday</label>
-    <input name='dayofweek' id='dayofweek' type="number"/>
-    </div>
-    <div>
-    <label for="hourofday">Hourofday</label>
-    <input name='hourofday' id='hourofday' type="number"/>
-    </div>
-    <div>
-    <label for="activity_merged">Activity_merged</label>
-    <input name='activity_merged' id='activity_merged' type="number"/>
-    </div>
-    <div>
-    <label for="artikel_id">Artikel_id</label>
-    <input name='artikel_id' id='artikel_id' type="number"/>
-    </div>
-    <!-- 
-    <div>
-    <label for="price">Price</label>
-    <input name='price' id='price' type="number"/>
-    </div>
-    <div>
-    <label for="rain">Rain(boolean)</label>
-    <input name='rain' id='rain' type="number"/>
-    </div>
-    <div>
-    <label for="temp">Temperature</label>
-    <input name='temp' id='temp' type="number"/>
-    </div>
-    <div>
-    <label for="station_capacity">Station Capacity</label>
-    <input name='station_capacity' id='station_capacity' type="number"/> -->
-    </div>
-        <button type="button" id="submitformBtn">Submit</button>
-	</form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <label for="">something</label>
-            <input name="s" id="" type="number" />
-        </div>
-        <div class="col-md-2">
-            <label for="">something</label>
-            <input name="s" id="" type="number" />
-        </div>
-        <div class="col-md-2">
-            <label for="">something</label>
-            <input name="s" id="" type="number" />
-        </div>
-        <div class="col-md-2">
-            <label for="">something</label>
-            <input name="s" id="" type="number" />
-        </div>
-        <div class="col-md-3">
-            <br>
-            <button type="button" id="submitformBtn2" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
-</div> 
-<!-- Graph 2--> 
-<div class="row">
-      <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div id="chartContainer2" style=" height:500px"></div>
-<!--				<div id="legend"><table>
-				<tr><td style="width:20vw"><div class="legend low"></div><p>something here.</p></td>
-                <td style="width:25vw"><div class="legend medium"></div><p>something here</p></td>
-                <td style="width:20vw"><div class="legend high"></div><p>something here</p></td></tr></table>
-				</div> -->
-            </div>
-        </div>
-      </div>    
-</body>
-</html>
 
+
+    <!-- Graph 2-->
+    <div class="row">
+      <div class="col-md-9">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div id="chartContainer"></div>
+
+<div class="col-md-3 card greyed">
+  <img class="card-img-top" src="img/coffee.png" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">FREE COFFEE</h5>
+    <p class="card-text">Get a free coffee with your carwash.</p>
+    <a href="#" class="btn btn-primary">Redeem now!</a>
+  </div>
+</div>
+
+<div class="col-md-3 card greyed">
+  <img class="card-img-top" src="img/whopper.png" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">FREE WHOPPER</h5>
+    <p class="card-text">Get a free Whopper from our very own Burger King restaurant.</p>
+    <a href="#" class="btn btn-primary">Redeem now!</a>
+  </div>
+</div>
+
+<div class="col-md-3 card greyed">
+  <img class="card-img-top" src="img/discount10.png" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">10% DISCOUNT</h5>
+    <p class="card-text">Get 10% Discount on your next car wash.</p>
+    <a href="#" class="btn btn-primary">Redeem now!</a>
+  </div>
+</div>
+
+<div class="col-md-3 card greyed">
+  <img class="card-img-top" src="img/discount20.png" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">20% DISCOUNT</h5>
+    <p class="card-text">Get 20% Discount on your next car wash.</p>
+    <a href="#" class="btn btn-primary">Redeem now!</a>
+  </div>
+</div>
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3" id="sidepanel">
+          <div class="panel panel-default">
+            <div class="panel-body" id="sidebar2">
+              <p style="font-family: sans-serif;">Please fill in the required options:</p>
+              <form id='form1'>
+                <div>
+                  <label for="Age">Age</label>
+                  <input name='Age' id='Age' type="number" />
+                </div>
+                <div>
+                  <label for="Vehicle">Vehicle</label>
+                  <input name='Vehicle' id='Vehicle' type="number" />
+                </div>
+                <div>
+                  <label for="Income">Income</label>
+                  <input name='Income' id='Income' type="number" />
+                </div>
+                <div>
+                  <label for="Education">Education</label>
+                  <input name='Education' id='Education' type="number" />
+                </div>
+                <div>
+                  <label for="Gender">Gender</label>
+                  <input name='Gender' id='Gender' type="number" />
+                </div>
+
+                <div>
+                  <label for="Demand">Demand</label>
+                  <input name='Demand' id='Demand' type="number" />
+                </div>
+
+              </div>
+              <button type="button" id="submitformBtn">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  </html>

@@ -6,3 +6,9 @@
 .hidden {
     visibility: hidden;
 }
+
+.greyed {
+    opacity: 0.2;
+    filter: alpha(opacity=20); /* msie */
+}
+
