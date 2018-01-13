@@ -3,7 +3,7 @@
 var BASIC_URL = "http://localhost:5000/washing/";
 // var BASIC_URL = "http://localhost:5000/washing/?artikel_id=1&activity_merged=1&hourofday=12&month=11&dayofweek=4";
 //to extract the default values of demand until this hour
-var DefaultURL =  "http://localhost:5000/washing/?artikel_id=&activity_merged=&month=&dayofweek=";
+var URL_Todays_Data =  "http://localhost:5000/washing/current";
 var chart;
 //mockup data
 window.onload = function () {
@@ -193,38 +193,34 @@ function updateDataByNewEntry(newValue){
 }
 
 function getInitialData(){
-	//get time
-	var time = new Date();
-	var hour = time.getHours();
-	console.log(hour);
+	$.ajax({
+		url: URL_Todays_Data,
+		method: "GET",
+		success: function(result){
+			console.log(result);
+			var size = result.length;
+			console.log("Size is" + size);
 
-	for(var i=0 ;i <=1; i++){
-
-		$.ajax({
-			url: DefaultURL,
-			data: {hourofday : hour, },
-			method: "GET",
-			success: function(result){
-				console.log("result obtained for hour '"+ hour+"' is " + result);
-				//get time sent
-				var hour = $('#hourofday').val();
-				var newPoint = {x : hour, y : Math.round(result)};
-				//push data to chart
-				updateDataByNewEntry(newPoint);
-				//update graph by re-rendring it
-				chart.render();
-			}, 
-			error: function(xhr, textStatus, errorThrown){ 
-				alert("Unable to fetch Server data"+ textStatus); 
-				alert("xhr"+ xhr);             	 	
+			for(var i = 0; i<size;i++){
+				var point = {x: i, y:  Math.round( result[i][1] )};
+				console.log("value was " + point.y);
+				updateDataByNewEntry(point);
 			}
-		});
 
-	}
+			chart.render();
+			
+			//push data to chart
+			// updateDataByNewEntry(newPoint);
+			//update graph by re-rendring it
+			// chart.render();
+		}, 
+		error: function(xhr, textStatus, errorThrown){ 
+			alert("Unable to fetch Server data"+ textStatus); 
+			alert("xhr"+ xhr);             	 	
+		}
+	});
 
-	//get recoud per hour until the current time
 
-	//update the chart
 }
 
 
