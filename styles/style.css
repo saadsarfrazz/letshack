@@ -1,0 +1,4 @@
+#form1  { display: table;      }
+#form1 > div   { display: table-row;  }
+#form1  label { display: table-cell; }
+#form1  input { display: table-cell; }
