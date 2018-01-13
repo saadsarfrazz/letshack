@@ -153,43 +153,89 @@ function toogleDataSeries(e){
 }
 
 } //on load ends here
+
 $(function() {
 //load current prediction data from server and draw upto current hour
 getInitialData();
 
-//$('#submitform1Btn','click',fetchPridictionData1);
-$('#submitformBtn').click( function (){
-    console.log("form submited");
-   console.log($('#form1').serialize());
+$('#submitformBtn2').click( function (){
    $.ajax({
        url: BASIC_URL,
        data: $('#form1').serialize(),
        method: "GET",
        success: function(result){
-           console.log("result obtained is" + result);
+           //console.log("result obtained is" + result);
 		   //get time sent
 		   var hour = $('#hourofday').val();
 		   var newPoint = {x : hour, y : Math.round(result)};
-		   console.log(newPoint.x);
+		   console.log(result);
 		   console.log(newPoint.y);
+		   //console.log(newPoint.x);
+		   //console.log(newPoint.y);
 		   //push data to chart
 		   updateDataByNewEntry(newPoint);
 		   //update graph by re-rendring it
 		   chart.render();
        }, 
        error: function(xhr, textStatus, errorThrown){ 
-           alert("Unable to fetch Server data"+ textStatus); 
-		   alert("xhr"+ xhr);             	 	
+           //alert("Unable to fetch Server data"+ textStatus); 
+		   //alert("xhr"+ xhr);             	 	
        }
    });
 
 });
 
+$('#submitformBtn1').click( function (){
+   $.ajax({
+       url: BASIC_URL,
+       data: $('#form2').serialize(),
+       method: "GET",
+       success: function(result){
+
+           //console.log("result obtained is" + result);
+		   
+		   //get time sent
+		   var hour = $('#hourofday').val();
+		   var newPoint = {x : hour, y : Math.round(result[0])};
+		   
+		   //console.log(newPoint.x);
+		   //console.log(newPoint.y);
+		   
+		   //push data to chart
+		   updateDataByNewEntry(newPoint);
+
+		   //update graph by re-rendring it
+		   chart.render();
+
+       }, 
+       error: function(xhr, textStatus, errorThrown){
+       	// TODO
+           //alert("Unable to fetch Server data"+ textStatus); 
+		   //alert("xhr"+ xhr);             	 	
+       }
+   });
+
+});
+
+
 function updateDataByNewEntry(newValue){
-	console.log("value to be added " + newValue)
-	chart.data[0].dataPoints.push(newValue);
-	console.log(chart.data[0].dataPoints);
-	
+
+	var index = -1;
+	for(var i=0; i < chart.data[0].dataPoints.length; i++) {
+		if(chart.data[0].dataPoints[i].x == newValue.x) {
+			chart.data[0].dataPoints[i].y = newValue.y
+			//break;
+			return;
+		}
+	}
+
+	if(index == -1) {
+		chart.data[0].dataPoints.push(newValue);	
+	} else {
+		//chart.data[0].dataPoints[index] = newValue;
+	}
+
+	//console.log(newValue.y)
 }
 
 function getInitialData(){
